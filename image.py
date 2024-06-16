@@ -189,9 +189,8 @@ class GetRemarkByImage:
             print("没有匹配到negative_prompt的prompt:")
             print(prompt.strip())
 
-        a = "不是"
-        b = "哥们"
-        return {"ui": {"prompt": a, "negative": b}, "result": (prompt,negative_prompt,)}
+
+        return {"ui": {"prompt": prompt, "negative": negative_prompt}, "result": (prompt,negative_prompt,)}
 
 
 class LoadImage:
