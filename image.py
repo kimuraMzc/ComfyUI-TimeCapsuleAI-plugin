@@ -7,6 +7,13 @@ import numpy as np
 import hashlib
 import torch
 
+def remove_lora_tags(text):
+    # 定义匹配标签的正则表达式模式
+    pattern = r'<lora.*?>'
+    # 使用re.sub()函数替换匹配的内容为空字符串
+    cleaned_text = re.sub(pattern, '', text)
+    return cleaned_text
+
 class LoadImageGetRemark:
     def __init__(self):
         pass
@@ -20,7 +27,7 @@ class LoadImageGetRemark:
                 }
 
     RETURN_TYPES = ("STRING", "STRING")
-    RETURN_NAMES = ("正向提示词","负面提示词")
+    RETURN_NAMES = ("正面条件","负面条件")
     FUNCTION = "load_image_get_remark"
     CATEGORY = "TimeCapsuleAI"
 
@@ -85,6 +92,7 @@ class LoadImageGetRemark:
             print("没有匹配到negative_prompt的prompt:")
             print(prompt.strip())
 
+        prompt = remove_lora_tags(prompt)
         return (prompt, negative_prompt)
 
     @classmethod
@@ -189,7 +197,7 @@ class GetRemarkByImage:
             print("没有匹配到negative_prompt的prompt:")
             print(prompt.strip())
 
-
+        prompt = remove_lora_tags(prompt)
         return {"ui": {"prompt": prompt, "negative": negative_prompt}, "result": (prompt,negative_prompt,)}
 
 
